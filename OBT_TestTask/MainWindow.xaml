@@ -36,7 +36,7 @@
 
         <StackPanel Grid.Row="1" Margin="10">
             <Button x:Name="importButton" Content="Импорт данных"/>
-            <Button Content="Экспорт в excel данных"/>
+            <Button x:Name="exportExcelButton" Content="Экспорт в excel данных"/>
             <Button Content="Экспорт в xml данных"/>
         </StackPanel>
     </Grid>

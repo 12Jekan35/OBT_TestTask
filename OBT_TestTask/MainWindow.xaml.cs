@@ -26,6 +26,7 @@ namespace OBT_TestTask
     {
         private AppDBContext context;
         private OpenFileDialog openFile;
+        private SaveFileDialog saveFile;
         private List<BudgetAccount> budgets;
         public MainWindow()
         {
@@ -33,6 +34,9 @@ namespace OBT_TestTask
             context = new AppDBContext();
             openFile = new OpenFileDialog();
             openFile.Filter = "Текстовый документ|*.txt";
+            saveFile = new SaveFileDialog();
+            saveFile.Filter = "Excel file|*.xlsx";
+
             budgets = context.Accounts.Include(a => a.StartYearDebt)
                                       .Include(a => a.ChangeUpDebt)
                                       .Include(a => a.ChangeDownDebt)
@@ -41,6 +45,13 @@ namespace OBT_TestTask
                                       .ToList();
             dataGrid.ItemsSource = budgets;
             importButton.Click += OpenImportFile;
+            exportExcelButton.Click += ExportDataToXLSX;
+        }
+
+        private void ExportDataToXLSX(object sender, RoutedEventArgs e)
+        {
+            saveFile.ShowDialog();
+            FileExporter.GenerateXLSXForm(budgets, saveFile.FileName);
         }
 
         private void OpenImportFile(object sender, RoutedEventArgs e)

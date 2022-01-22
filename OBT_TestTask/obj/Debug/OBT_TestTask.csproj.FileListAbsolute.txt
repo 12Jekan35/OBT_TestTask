@@ -39,7 +39,6 @@ C:\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.csproj.GenerateResource.cach
 C:\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.csproj.CoreCompileInputs.cache
 C:\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.exe
 C:\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.pdb
-C:\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.csproj.CopyComplete
 C:\OBT_TestTask\OBT_TestTask\bin\Debug\EPPlus.dll
 C:\OBT_TestTask\OBT_TestTask\bin\Debug\Microsoft.Bcl.HashCode.dll
 C:\OBT_TestTask\OBT_TestTask\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
