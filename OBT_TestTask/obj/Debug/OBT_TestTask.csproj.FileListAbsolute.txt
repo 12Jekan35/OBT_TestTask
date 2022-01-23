@@ -106,3 +106,4 @@ C:\Users\makus\Desktop\Новая папка (2)\OBT_TestTask\OBT_TestTask\obj\D
 C:\Users\makus\Desktop\Новая папка (2)\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.csproj.CoreCompileInputs.cache
 C:\Users\makus\Desktop\Новая папка (2)\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.exe
 C:\Users\makus\Desktop\Новая папка (2)\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.pdb
+C:\OBT_TestTask\OBT_TestTask\obj\Debug\OBT_TestTask.Migrations.AddBudgetAccount.resources

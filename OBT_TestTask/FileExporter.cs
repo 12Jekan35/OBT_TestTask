@@ -47,10 +47,6 @@ namespace OBT_TestTask
             sheet.Columns[13].Width = 6.57;
             sheet.Columns[14].Width = 15.57;
 
-            
-
-
-
             sheet.Cells["A1:A4"].Merge = true;
             sheet.Cells["A1:A4"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             sheet.Cells["A1:A4"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
@@ -292,23 +288,6 @@ namespace OBT_TestTask
                 {
                     sheet.Cells[6 + i, 2].Value = accounts[i].EndSamePastPeriod.Overdue;
                 }
-                //sheet.Cells[6 + i, 3].Value = accounts[i].StartYearDebt.AllSum == 0? "-" : accounts[i].StartYearDebt.AllSum;
-                //sheet.Cells[6 + i, 3].Value = accounts[i].StartYearDebt.LongTerm == 0? "-" : accounts[i].StartYearDebt.LongTerm;
-                //sheet.Cells[6 + i, 4].Value = accounts[i].StartYearDebt.Overdue == 0? "-" : accounts[i].StartYearDebt.Overdue;
-                //
-                //sheet.Cells[6 + i, 5].Value = accounts[i].ChangeUpDebt.AllSum == 0? "-" : accounts[i].ChangeUpDebt.AllSum;
-                //sheet.Cells[6 + i, 6].Value = accounts[i].ChangeUpDebt.NonmonetaryPart == 0? "-" : accounts[i].ChangeUpDebt.NonmonetaryPart;
-                //
-                //sheet.Cells[6 + i, 7].Value = accounts[i].ChangeDownDebt.AllSum == 0? "-" : accounts[i].ChangeDownDebt.AllSum;
-                //sheet.Cells[6 + i, 8].Value = accounts[i].ChangeDownDebt.NonmonetaryPart == 0? "-" : accounts[i].ChangeDownDebt.NonmonetaryPart;
-                //
-                //sheet.Cells[6 + i, 9].Value = accounts[i].EndReportPeriodDebt.AllSum == 0? "-" : accounts[i].EndReportPeriodDebt.AllSum;
-                //sheet.Cells[6 + i, 10].Value = accounts[i].EndReportPeriodDebt.LongTerm == 0? "-" : accounts[i].EndReportPeriodDebt.LongTerm;
-                //sheet.Cells[6 + i, 11].Value = accounts[i].EndReportPeriodDebt.Overdue == 0? "-" : accounts[i].EndReportPeriodDebt.Overdue;
-                //                                         
-                //sheet.Cells[6 + i, 12].Value = accounts[i].EndSamePastPeriod.AllSum == 0? "-" : accounts[i].EndSamePastPeriod.AllSum;
-                //sheet.Cells[6 + i, 13].Value = accounts[i].EndSamePastPeriod.LongTerm == 0? "-" : accounts[i].EndSamePastPeriod.LongTerm;
-                //sheet.Cells[6 + i, 14].Value = accounts[i].EndSamePastPeriod.Overdue == 0? "-" : accounts[i].EndSamePastPeriod.Overdue;
             }
 
             sheet.Cells[1, 1, 6 + accounts.Count, 14].AutoFitColumns();

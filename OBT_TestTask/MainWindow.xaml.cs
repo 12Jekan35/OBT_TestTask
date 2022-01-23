@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using OBT_TestTask.DatabaseServices;
+using OBT_TestTask.Migrations;
 using OBT_TestTask.Models;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,8 @@ namespace OBT_TestTask
         {
             InitializeComponent();
 
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDBContext, Configuration>());
+
             context = new AppDBContext();
             openFile = new OpenFileDialog();
             openFile.Filter = "Текстовый документ|*.txt";
@@ -63,11 +66,15 @@ namespace OBT_TestTask
             try
             {
                 var list = FileImporter.ParseImportFile(openFile.FileName);
-                FileImporter.SplitExistingAccounts(budgets, list);
-                context.Accounts.AddRange(list);
-                foreach (var item in budgets)
+                if (budgets != null || budgets.Count > 1)
                 {
-                    context.Entry(item).State = EntityState.Modified;
+                    FileImporter.SplitExistingAccounts(budgets, list);
+                    context.Accounts.AddRange(list);
+                    foreach (var item in budgets)
+                    {
+                        context.Entry(item).State = EntityState.Modified;
+
+                    }
                 }
                 context.SaveChanges();
                 UpdateData();
