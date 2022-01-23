@@ -7,11 +7,20 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OBT_TestTask
 {
     public static class FileExporter
     {
+        public static bool GenerateXMLReport(List<BudgetAccount> accounts, string path)
+        {
+            XDocument xdoc = new XDocument();
+
+
+            return File.Exists(path);
+        }
+
         public static bool GenerateXLSXForm(List<BudgetAccount> accounts, string path)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;

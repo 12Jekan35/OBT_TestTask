@@ -16,7 +16,7 @@ namespace OBT_TestTask.Models
         public int ID { get; private set; }
         [Column("AllSum")]
         public decimal AllSum { get; set; }
-        [Column("NonMonetaryPart")]
+        [Column("NonmonetaryPart")]
         public decimal NonmonetaryPart { get; set; }
 
     }

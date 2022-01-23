@@ -31,27 +31,30 @@ namespace OBT_TestTask
         public MainWindow()
         {
             InitializeComponent();
+
             context = new AppDBContext();
             openFile = new OpenFileDialog();
             openFile.Filter = "Текстовый документ|*.txt";
             saveFile = new SaveFileDialog();
             saveFile.Filter = "Excel file|*.xlsx";
 
-            budgets = context.Accounts.Include(a => a.StartYearDebt)
-                                      .Include(a => a.ChangeUpDebt)
-                                      .Include(a => a.ChangeDownDebt)
-                                      .Include(a => a.EndReportPeriodDebt)
-                                      .Include(a => a.EndSamePastPeriod)
-                                      .ToList();
-            dataGrid.ItemsSource = budgets;
+            UpdateData();
+
             importButton.Click += OpenImportFile;
             exportExcelButton.Click += ExportDataToXLSX;
         }
 
         private void ExportDataToXLSX(object sender, RoutedEventArgs e)
         {
-            saveFile.ShowDialog();
-            FileExporter.GenerateXLSXForm(budgets, saveFile.FileName);
+            try
+            {
+                saveFile.ShowDialog();
+                FileExporter.GenerateXLSXForm(budgets, saveFile.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void OpenImportFile(object sender, RoutedEventArgs e)
@@ -69,21 +72,21 @@ namespace OBT_TestTask
                 context.SaveChanges();
                 UpdateData();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Не удалось импортировать данные из файла");
+                MessageBox.Show("Не удалось импортировать данные из файла: " + ex.Message + "\n" + ex.InnerException);
             }
 
         }
         private void UpdateData()
         {
-            var list = context.Accounts.Include(a => a.StartYearDebt)
+            var budgets = context.Accounts.Include(a => a.StartYearDebt)
                                        .Include(a => a.ChangeUpDebt)
                                        .Include(a => a.ChangeDownDebt)
                                        .Include(a => a.EndReportPeriodDebt)
                                        .Include(a => a.EndSamePastPeriod)
                                        .ToList();
-            dataGrid.ItemsSource = list;
+            dataGrid.ItemsSource = budgets;
         }
     }
 }
