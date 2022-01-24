@@ -1,10 +1,10 @@
-﻿using Microsoft.Win32;
-using OBT_TestTask.DatabaseServices;
-using OBT_TestTask.Migrations;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using OBT_TestTask.Models;
+using OBT_TestTask.Services;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 namespace OBT_TestTask
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -32,10 +32,8 @@ namespace OBT_TestTask
         public MainWindow()
         {
             InitializeComponent();
-
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDBContext, Configuration>());
-
             context = new AppDBContext();
+            context.Database.Migrate();
             openFile = new OpenFileDialog();
             openFile.Filter = "Текстовый документ|*.txt";
             saveFile = new SaveFileDialog();
@@ -49,10 +47,11 @@ namespace OBT_TestTask
 
         private void ExportDataToXLSX(object sender, RoutedEventArgs e)
         {
+            if ( !saveFile.ShowDialog() ?? true)
+                return; 
             try
             {
-                saveFile.ShowDialog();
-                FileExporter.GenerateXLSXForm(budgets, saveFile.FileName);
+                FileExporter.GenerateXLSXForm(dataGrid.ItemsSource as List<BudgetAccount>, saveFile.FileName);
             }
             catch (Exception ex)
             {
@@ -62,22 +61,23 @@ namespace OBT_TestTask
 
         private void OpenImportFile(object sender, RoutedEventArgs e)
         {
-            openFile.ShowDialog();
+            if (!openFile.ShowDialog() ?? true)
+                return;
             try
             {
-                var list = FileImporter.ParseImportFile(openFile.FileName);
-                if (budgets != null || budgets.Count > 1)
-                {
-                    FileImporter.SplitExistingAccounts(budgets, list);
-                    context.Accounts.AddRange(list);
-                    foreach (var item in budgets)
-                    {
-                        context.Entry(item).State = EntityState.Modified;
+              var list = FileImporter.ParseImportFile(openFile.FileName);
+              if (budgets != null)
+              {
+                  FileImporter.SplitExistingAccounts(budgets, list);
+                  foreach (var item in budgets)
+                  {
+                      context.Entry(item).State = EntityState.Modified;
 
-                    }
-                }
-                context.SaveChanges();
-                UpdateData();
+                  }
+              }
+              context.Accounts.AddRange(list);
+              context.SaveChanges();
+              UpdateData();
             }
             catch (Exception ex)
             {
@@ -87,13 +87,28 @@ namespace OBT_TestTask
         }
         private void UpdateData()
         {
-            var budgets = context.Accounts.Include(a => a.StartYearDebt)
+            budgets = context.Accounts.Include(a => a.StartYearDebt)
                                        .Include(a => a.ChangeUpDebt)
                                        .Include(a => a.ChangeDownDebt)
                                        .Include(a => a.EndReportPeriodDebt)
                                        .Include(a => a.EndSamePastPeriod)
                                        .ToList();
-            dataGrid.ItemsSource = budgets;
+            var list = budgets;
+            if (!string.IsNullOrEmpty(searchBox.Text))
+            {
+                list = (from acc in budgets
+                       where acc.Code.Contains(searchBox.Text)
+                       || acc.KOSGU.Contains(searchBox.Text)
+                       || acc.SintAccount.Contains(searchBox.Text)
+                       select acc).ToList();
+            }
+
+            dataGrid.ItemsSource = list;
+        }
+
+        private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateData();
         }
     }
 }

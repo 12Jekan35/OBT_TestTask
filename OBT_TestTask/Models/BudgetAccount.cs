@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OBT_TestTask.Models
 {
-    [Table("BudgetAccounts", Schema ="public")]
+    [Table("BudgetAccounts", Schema = "public")]
     public class BudgetAccount
     {
         [Key]
@@ -43,6 +43,5 @@ namespace OBT_TestTask.Models
         public virtual Debt EndReportPeriodDebt { get; set; }
         [ForeignKey("EndSamePastPeriodID")]
         public virtual Debt EndSamePastPeriod { get; set; }
-
     }
 }
