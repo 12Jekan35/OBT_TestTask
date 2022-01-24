@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\makus\\source\\repos\\OBT_TestTask\\OBT_TestTask.csproj": {}
+    "C:\\OBT_TestTask\\OBT_TestTask\\OBT_TestTask.csproj": {}
   },
   "projects": {
-    "C:\\Users\\makus\\source\\repos\\OBT_TestTask\\OBT_TestTask.csproj": {
+    "C:\\OBT_TestTask\\OBT_TestTask\\OBT_TestTask.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\makus\\source\\repos\\OBT_TestTask\\OBT_TestTask.csproj",
+        "projectUniqueName": "C:\\OBT_TestTask\\OBT_TestTask\\OBT_TestTask.csproj",
         "projectName": "OBT_TestTask",
-        "projectPath": "C:\\Users\\makus\\source\\repos\\OBT_TestTask\\OBT_TestTask.csproj",
+        "projectPath": "C:\\OBT_TestTask\\OBT_TestTask\\OBT_TestTask.csproj",
         "packagesPath": "C:\\Users\\makus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\makus\\source\\repos\\OBT_TestTask\\obj\\",
+        "outputPath": "C:\\OBT_TestTask\\OBT_TestTask\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

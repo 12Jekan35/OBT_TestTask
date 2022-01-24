@@ -110,5 +110,23 @@ namespace OBT_TestTask
         {
             UpdateData();
         }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Вы хотите удалить выбранный элемент?", "Удаление строки", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.No || result == MessageBoxResult.None || result == MessageBoxResult.Cancel)
+                return;
+
+            context.Entry(dataGrid.SelectedItem as BudgetAccount).State = EntityState.Deleted;
+            context.SaveChanges();
+            UpdateData();
+        }
+
+        private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            context.Entry(e.Row.Item as BudgetAccount).State = EntityState.Modified;
+            context.SaveChanges();
+            UpdateData();
+        }
     }
 }

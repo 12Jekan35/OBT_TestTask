@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qgGNt/tCgs8oUVMaORRNdbcQMAcDSMTc8qx7vHQf2zG751MfTUf57yZGeZkt+eAm9p8UuN+W1J01HIEyPTyQvw==",
+  "dgSpecHash": "5rkTiQ7ufTsaog9t18rd+KK/Gy8g3660tmbf9OwGWMrIWfD3hX+XIk6E7GMc+P6xeMZ7oKhYsIvZQa+Ut2B7tw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\makus\\source\\repos\\OBT_TestTask\\OBT_TestTask.csproj",
+  "projectFilePath": "C:\\OBT_TestTask\\OBT_TestTask\\OBT_TestTask.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\makus\\.nuget\\packages\\epplus\\5.8.5\\epplus.5.8.5.nupkg.sha512",
     "C:\\Users\\makus\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

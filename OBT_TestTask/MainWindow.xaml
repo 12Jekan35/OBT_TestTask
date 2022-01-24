@@ -12,7 +12,7 @@
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" SelectionMode="Single" CanUserDeleteRows="False" CanUserAddRows="False" CellEditEnding="dataGrid_CellEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Код" Binding="{Binding Code}" ClipboardContentBinding="{x:Null}"/>
                 <DataGridTextColumn Header="Номер Формы" Binding="{Binding FormNumber}" ClipboardContentBinding="{x:Null}"/>
@@ -42,6 +42,7 @@
         <StackPanel Grid.Row="2" Margin="10">
             <Button x:Name="importButton" Content="Импорт данных"/>
             <Button x:Name="exportExcelButton" Content="Экспорт в excel данных"/>
+            <Button x:Name="deleteButton" Content="Удалить выделенные записи" Click="deleteButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

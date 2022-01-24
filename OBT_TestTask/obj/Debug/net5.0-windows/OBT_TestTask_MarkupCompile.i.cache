@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\makus\source\repos\OBT_TestTask\obj\Debug\net5.0-windows\
+C:\OBT_TestTask\OBT_TestTask\obj\Debug\net5.0-windows\
 OBT_TestTask
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
-C:\Users\makus\source\repos\OBT_TestTask\App.xaml
+C:\OBT_TestTask\OBT_TestTask\App.xaml
 11407045341
 
 141267876694
 217137059471
 MainWindow.xaml;
 
-False
+True
 
