@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.IO;
+using System.Xml;
 
 namespace OBT_TestTask.Services
 {
@@ -269,6 +270,193 @@ namespace OBT_TestTask.Services
             sheet.Cells[1, 1, 6 + accounts.Count, 14].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
             File.WriteAllBytes(path, package.GetAsByteArray());
+            return File.Exists(path);
+        }
+
+        public static bool GenerateXMLForm(List<BudgetAccount> accounts, string path)
+        {
+            var doc = new XDocument();
+
+            XElement[] data = new XElement[accounts.Count + 1];
+            var total = new BudgetAccount();
+            var start = new Debt
+            {
+                AllSum = 0,
+                LongTerm = 0,
+                Overdue = 0
+            };
+            var changeUp = new ChangeDebt
+            {
+                AllSum = 0,
+                NonmonetaryPart = 0
+            };
+            var changeDown = new ChangeDebt
+            {
+                AllSum = 0,
+                NonmonetaryPart = 0
+            };
+            var endPeriod = new Debt
+            {
+                AllSum = 0,
+                LongTerm = 0,
+                Overdue = 0
+            };
+            var endSamePeriod = new Debt
+            {
+                AllSum = 0,
+                LongTerm = 0,
+                Overdue = 0
+            };
+            total.StartYearDebt = start;
+            total.ChangeUpDebt = changeUp;
+            total.ChangeDownDebt = changeDown;
+            total.EndReportPeriodDebt = endPeriod;
+            total.EndSamePastPeriod = endSamePeriod;
+
+            for (int i = 0; i < accounts.Count; i++)
+            {
+                var item = new XElement("Data");
+                var sintAccount = new XAttribute("СинтСчёт", accounts[i].SintAccount);
+                var _KOSGU = new XAttribute("КОСГУ", accounts[i].KOSGU);
+                item.Add(sintAccount);
+                item.Add(_KOSGU);
+
+                if (accounts[i].StartYearDebt.AllSum > 0)
+                {
+                    item.Add(new XAttribute("_x2", accounts[i].StartYearDebt.AllSum));
+                    total.StartYearDebt.AllSum += accounts[i].StartYearDebt.AllSum;
+                }
+                if (accounts[i].StartYearDebt.LongTerm > 0)
+                {
+                    item.Add(new XAttribute("_x3", accounts[i].StartYearDebt.LongTerm));
+                    total.StartYearDebt.LongTerm += accounts[i].StartYearDebt.LongTerm;
+                }
+                if (accounts[i].StartYearDebt.Overdue > 0)
+                {
+                    item.Add(new XAttribute("_x4", accounts[i].StartYearDebt.Overdue));
+                    total.StartYearDebt.Overdue += accounts[i].StartYearDebt.Overdue;
+                }
+                if (accounts[i].ChangeUpDebt.AllSum > 0)
+                {
+                    item.Add(new XAttribute("_x5", accounts[i].ChangeUpDebt.AllSum));
+                    total.ChangeUpDebt.AllSum += accounts[i].ChangeUpDebt.AllSum;
+                }
+                if (accounts[i].ChangeUpDebt.NonmonetaryPart > 0)
+                {
+                    item.Add(new XAttribute("_x6", accounts[i].ChangeUpDebt.NonmonetaryPart));
+                    total.ChangeUpDebt.NonmonetaryPart += accounts[i].ChangeUpDebt.NonmonetaryPart;
+                }
+                if (accounts[i].ChangeDownDebt.AllSum > 0)
+                {
+                    item.Add(new XAttribute("_x7", accounts[i].ChangeDownDebt.AllSum));
+                    total.ChangeDownDebt.AllSum += accounts[i].ChangeDownDebt.AllSum;
+                }
+                if (accounts[i].ChangeDownDebt.NonmonetaryPart > 0)
+                {
+                    item.Add(new XAttribute("_x8", accounts[i].ChangeDownDebt.NonmonetaryPart));
+                    total.ChangeDownDebt.NonmonetaryPart += accounts[i].ChangeDownDebt.NonmonetaryPart;
+                }
+                if (accounts[i].EndReportPeriodDebt.AllSum > 0)
+                {
+                    item.Add(new XAttribute("_x9", accounts[i].EndReportPeriodDebt.AllSum));
+                    total.EndReportPeriodDebt.AllSum += accounts[i].EndReportPeriodDebt.AllSum;
+                }
+                if (accounts[i].EndReportPeriodDebt.LongTerm > 0)
+                {
+                    item.Add(new XAttribute("_x10", accounts[i].EndReportPeriodDebt.LongTerm));
+                    total.EndReportPeriodDebt.LongTerm += accounts[i].EndReportPeriodDebt.LongTerm;
+                }
+                if (accounts[i].EndReportPeriodDebt.Overdue > 0)
+                {
+                    item.Add(new XAttribute("_x11", accounts[i].EndReportPeriodDebt.Overdue));
+                    total.EndReportPeriodDebt.Overdue += accounts[i].EndReportPeriodDebt.Overdue;
+                }
+                if (accounts[i].EndSamePastPeriod.AllSum > 0)
+                {
+                    item.Add(new XAttribute("_x12", accounts[i].EndSamePastPeriod.AllSum));
+                    total.EndSamePastPeriod.AllSum += accounts[i].EndSamePastPeriod.AllSum;
+                }
+                if (accounts[i].EndSamePastPeriod.LongTerm > 0)
+                {
+                    item.Add(new XAttribute("_x13", accounts[i].EndSamePastPeriod.LongTerm));
+                    total.EndSamePastPeriod.LongTerm += accounts[i].EndSamePastPeriod.LongTerm;
+                }
+                if (accounts[i].EndSamePastPeriod.Overdue > 0)
+                {
+                    item.Add(new XAttribute("_x14", accounts[i].EndSamePastPeriod.Overdue));
+                    total.EndSamePastPeriod.Overdue += accounts[i].EndSamePastPeriod.Overdue;
+                }
+                data[i] = item;
+            }
+            var totalElement = new XElement("Data");
+            totalElement.Add(new XAttribute("СинтСчёт", "88888"));
+            totalElement.Add(new XAttribute("КОСГУ", "888"));
+
+            if (total.StartYearDebt.AllSum > 0)
+            {
+                totalElement.Add(new XAttribute("_x2", total.StartYearDebt.AllSum));
+            }
+            if (total.StartYearDebt.LongTerm > 0)
+            {
+                totalElement.Add(new XAttribute("_x3", total.StartYearDebt.LongTerm));
+            }
+            if (total.StartYearDebt.Overdue > 0)
+            {
+                totalElement.Add(new XAttribute("_x4", total.StartYearDebt.Overdue));
+            }
+            if (total.ChangeUpDebt.AllSum > 0)
+            {
+                totalElement.Add(new XAttribute("_x5", total.ChangeUpDebt.AllSum));
+            }
+            if (total.ChangeUpDebt.NonmonetaryPart > 0)
+            {
+                totalElement.Add(new XAttribute("_x6", total.ChangeUpDebt.NonmonetaryPart));
+            }
+            if (total.ChangeDownDebt.AllSum > 0)
+            {
+                totalElement.Add(new XAttribute("_x7", total.ChangeDownDebt.AllSum));
+            }
+            if (total.ChangeDownDebt.NonmonetaryPart > 0)
+            {
+                totalElement.Add(new XAttribute("_x8", total.ChangeDownDebt.NonmonetaryPart));
+            }
+            if (total.EndReportPeriodDebt.AllSum > 0)
+            {
+                totalElement.Add(new XAttribute("_x9", total.EndReportPeriodDebt.AllSum));
+            }
+            if (total.EndReportPeriodDebt.LongTerm > 0)
+            {
+                totalElement.Add(new XAttribute("_x10", total.EndReportPeriodDebt.LongTerm));
+            }
+            if (total.EndReportPeriodDebt.Overdue > 0)
+            {
+                totalElement.Add(new XAttribute("_x11", total.EndReportPeriodDebt.Overdue));
+            }
+            if (total.EndSamePastPeriod.AllSum > 0)
+            {
+                totalElement.Add(new XAttribute("_x12", total.EndSamePastPeriod.AllSum));
+            }
+            if (total.EndSamePastPeriod.LongTerm > 0)
+            {
+                totalElement.Add(new XAttribute("_x13", total.EndSamePastPeriod.LongTerm));
+            }
+            if (total.EndSamePastPeriod.Overdue > 0)
+            {
+                totalElement.Add(new XAttribute("_x14", total.EndSamePastPeriod.Overdue));
+            }
+            data[accounts.Count] = totalElement;
+
+            var report = new XElement("RootXml", 
+                                      new XElement("Report",
+                                                   new XAttribute("Code", "042"),
+                                                   new XAttribute("AlbumCode", "МЕС_К"),
+                                                   new XElement("FormVariant",
+                                                                new XAttribute("Number", "1"),
+                                                                new XAttribute("NsiVariantCode", "0000"),
+                                                                new XElement("Table", new XAttribute("Code", "Строка"), data))));
+
+            doc.Add(report);
+            doc.Save(path);
             return File.Exists(path);
         }
     }

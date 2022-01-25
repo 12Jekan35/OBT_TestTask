@@ -42,6 +42,7 @@
         <StackPanel Grid.Row="2" Margin="10">
             <Button x:Name="importButton" Content="Импорт данных"/>
             <Button x:Name="exportExcelButton" Content="Экспорт в excel данных"/>
+            <Button x:Name="exportXmlButton" Content="Экспорт в xml данных"/>
             <Button x:Name="deleteButton" Content="Удалить выделенные записи" Click="deleteButton_Click"/>
         </StackPanel>
     </Grid>

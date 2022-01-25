@@ -37,16 +37,32 @@ namespace OBT_TestTask
             openFile = new OpenFileDialog();
             openFile.Filter = "Текстовый документ|*.txt";
             saveFile = new SaveFileDialog();
-            saveFile.Filter = "Excel file|*.xlsx";
 
             UpdateData();
 
             importButton.Click += OpenImportFile;
             exportExcelButton.Click += ExportDataToXLSX;
+            exportXmlButton.Click += ExportDataToXML;
+        }
+
+        private void ExportDataToXML(object sender, RoutedEventArgs e)
+        {
+            saveFile.Filter = "XML file|*.xml";
+            if (!saveFile.ShowDialog() ?? true)
+                return;
+            try
+            {
+                FileExporter.GenerateXMLForm(dataGrid.ItemsSource as List<BudgetAccount>, saveFile.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ExportDataToXLSX(object sender, RoutedEventArgs e)
         {
+            saveFile.Filter = "Excel file|*.xlsx";
             if ( !saveFile.ShowDialog() ?? true)
                 return; 
             try
